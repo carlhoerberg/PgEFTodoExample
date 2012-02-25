@@ -1,7 +1,7 @@
-﻿@{
+﻿@model System.Web.Mvc.HandleErrorInfo
+@{
     Layout = null;
 }
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,5 +11,13 @@
     <h2>
         Sorry, an error occurred while processing your request.
     </h2>
+    @{var e = Model.Exception; }
+    @do {
+        <h3>
+            @e.Message
+        </h3>
+        <pre>@e.StackTrace</pre>
+        @{e = e.InnerException;}
+    } while(e != null);
 </body>
 </html>
