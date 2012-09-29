@@ -13,12 +13,13 @@ namespace PgEFTodoExample.Models
     {
         private static DbConnection CreateConnection()
         {
-            var uriString = ConfigurationManager.AppSettings["CLOUDPOSTGRES_URL"] ?? ConfigurationManager.AppSettings["LOCAL_URL"];
+            var uriString = ConfigurationManager.AppSettings["ELEPHANTSQL_URL"] ?? ConfigurationManager.AppSettings["LOCAL_URL"];
             var uri = new Uri(uriString);
             var db = uri.AbsolutePath.Trim('/');
             var user = uri.UserInfo.Split(':')[0];
             var passwd = uri.UserInfo.Split(':')[1];
-            var connStr = string.Format("Server={0};Database={1};User Id={2};Password={3}", uri.Host, db, user, passwd);
+            var connStr = string.Format("Server={0};Port={1};Database={2};User Id={3};Password={4}", 
+                uri.Host, uri.Port, db, user, passwd);
             return new Npgsql.NpgsqlConnection(connStr);
         }
 
